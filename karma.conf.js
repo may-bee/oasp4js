@@ -36,10 +36,10 @@ module.exports = function (config) {
         basePath: '.',
 
         // testing framework to use (jasmine/mocha/qunit/...)
-        frameworks: ['jasmine'],
+        frameworks: ['systemjs', 'jasmine'],
 
         // list of files / patterns to load in the browser
-        files: _.flatten([libs, pathsConf.scripts.src(), pathsConf.scripts.testSrc()]),
+        files: pathsConf.scripts.testSrc(),
 
         // list of files / patterns to exclude
         exclude: [],
@@ -61,7 +61,11 @@ module.exports = function (config) {
 
         // Which plugins to enable
         plugins: [
-            'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine'
+            'karma-systemjs',
+            'karma-phantomjs-launcher',
+            'karma-chrome-launcher',
+            'karma-junit-reporter',
+            'karma-jasmine'
         ],
 
         // Continuous Integration mode
@@ -81,6 +85,29 @@ module.exports = function (config) {
         junitReporter: {
             outputDir: pathsConf.paths.testOutput,
             outputFile: 'test-results.xml'
+        },
+        systemjs: {
+            configFile: 'system.config.js',
+            config: {
+                paths: {
+                    'angular': 'bower:angular/angular.js',
+                    'tmp/*': '/base/.tmp/*',
+                    'es6-module-loader': 'node_modules/es6-module-loader/dist/es6-module-loader.js',
+                    'systemjs': 'node_modules/systemjs/dist/system.js',
+                    'system-polyfills': 'node_modules/systemjs/dist/system-polyfills.js',
+                    'phantomjs-polyfill': 'node_modules/phantomjs-polyfill/bind-polyfill.js',
+                    "typescript": "node_modules/typescript/lib/typescript.js"
+                },
+                meta: {
+                    'bower:angular/angular.js': {
+                        format: 'global'
+                    }
+                }
+            },
+
+            serveFiles: [
+                'bower_components/**/*', pathsConf.paths.src + '/**/*', pathsConf.paths.tmp + '/**/*'
+            ]
         }
     };
     if (process.env.generateCoverage === 'true') {

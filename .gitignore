@@ -11,3 +11,6 @@ java/target
 .sonar
 *.bak
 docs/
+typings/
+.vscode/
+tsd.json

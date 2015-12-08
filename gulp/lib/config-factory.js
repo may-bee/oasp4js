@@ -37,6 +37,55 @@ var configFactory = function (externalConfig) {
                 return [pathsBuilder.build('{src}/index.html')];
             }
         },
+        i18n: {
+            src: function () {
+                return _.flatten([
+                    pathsBuilder.build('{src}/**/i18n/**/*.json')
+                ]);
+            }
+        },
+        html: {
+            src: function () {
+                return _.flatten([
+                    pathsBuilder.build('{src}/**/*.html'),
+                    pathsBuilder.build('!{src}/index.html'),
+                    pathsBuilder.build('!{src}/**/*.tpl.html')
+                ]);
+            }
+        },
+        scripts: {
+            src: function () {
+                return pathsBuilder.build('{src}/*.module.ts');
+            },
+            testSrc: function () {
+                return _.flatten([
+                    //load main spec to guarantee angular-mock loading
+                    pathsBuilder.build('{testSrc}/app.spec.ts'),
+                    pathsBuilder.build('{src}/*.module.ts'),
+                    pathsBuilder.build('{testSrc}/*.mock.ts'),
+                    pathsBuilder.build('{testSrc}/**/*.mock.ts'),
+                    pathsBuilder.build('{testSrc}/*.spec.ts'),
+                    pathsBuilder.build('{testSrc}/**/*.spec.ts')
+                ]);
+            },
+            lintSrc: function () {
+                return _.flatten([
+                    pathsBuilder.build('{src}/*.module.ts'),
+                    pathsBuilder.build('{src}/**/*.ts')
+                ]);
+            }
+        },
+        ngTemplates: {
+            src: function () {
+                return pathsBuilder.build('{src}/**/*.tpl.html');
+            },
+            targetModule: function () {
+                return 'ng';
+            },
+            target: function () {
+                return pathsBuilder.build('app/app.templates.js');
+            }
+        },
         styles: {
             /** include only root files*/
             src: function () {
@@ -49,56 +98,20 @@ var configFactory = function (externalConfig) {
             output: function () {
                 return externalConfig.styles.output;
             },
-            injects: function () {
-                return [pathsBuilder.build('{tmp}/**/*.css'), pathsBuilder.build('{src}/**/*.css')];
-            },
             includePaths: function () {
                 return [
                     externalConfig.paths.src,
-                    bowerConfig.directory
+                    externalConfig.paths.tmp
                 ];
-            }
-        },
-        scripts: {
-            src: function () {
-                return _.flatten([
-                    pathsBuilder.build('{src}/*.module.js'),
-                    pathsBuilder.buildForTopLevelModules(
-                        '{src}/{moduleFile}', '{src}/{moduleDir}/**/*.module.js', '{src}/{moduleDir}/**/!(*spec|*mock).js', '{tmp}/{moduleDir}/**/*.js')
-                ]);
-            },
-            testSrc: function () {
-                return _.flatten([
-                    pathsBuilder.build('{testSrc}/*.mock.js'),
-                    pathsBuilder.buildForTopLevelModules(
-                        '{testSrc}/{moduleDir}/**/*.mock.js'
-                    ),
-                    pathsBuilder.build('{testSrc}/*.spec.js'),
-                    pathsBuilder.buildForTopLevelModules(
-                        '{testSrc}/{moduleDir}/**/*.spec.js'
-                    )
-                ]);
-            },
-            lintSrc: function () {
-                return _.flatten([
-                    pathsBuilder.build('{src}/*.module.js'),
-                    pathsBuilder.buildForTopLevelModules(
-                        '{src}/{moduleFile}', '{src}/{moduleDir}/**/*.module.js', '{src}/{moduleDir}/**/!(*spec|*mock).js')
-                ]);
-            }
-        },
-        i18n: {
-            src: function () {
-                return pathsBuilder.buildForTopLevelModules('{src}/{moduleDir}/i18n/**/*.json');
             }
         },
         img: {
             src: function () {
-                return pathsBuilder.buildForTopLevelModules('{src}/{moduleDir}/**/img/**/*.*', '!{src}/{moduleDir}/**/img/sprite/**');
+                return [pathsBuilder.build('{src}/**/img/**/*.*'), pathsBuilder.build('!{src}/**/img/sprite/**/*.*')];
             },
             sprite: {
                 src: function () {
-                    return pathsBuilder.buildForTopLevelModules('{src}/{moduleDir}/**/img/sprite/**/*.png');
+                    return pathsBuilder.build('{src}/**/img/sprite/**/*.png');
                 },
                 output: {
                     css: function () {
@@ -108,28 +121,6 @@ var configFactory = function (externalConfig) {
                         return 'img/sprite.png';
                     }
                 }
-            }
-        },
-        html: {
-            src: function () {
-                return pathsBuilder.buildForTopLevelModules(
-                    '{src}/{moduleDir}/**/*.html',
-                    '!{src}/{moduleDir}/**/*.tpl.html'
-                );
-            }
-        },
-        ngTemplates: {
-            conf: function () {
-                return pathsBuilder.visitTopLevelModules(function (module) {
-                    if (module.ngModule) {
-                        return {
-                            module: module.ngModule + '.templates',
-                            moduleDir: module.moduleDir,
-                            file: pathsBuilder.build('{moduleDir}/{module}.templates.js', module),
-                            src: pathsBuilder.build('{src}/{moduleDir}/**/*.tpl.html', module)
-                        };
-                    }
-                });
             }
         }
     };

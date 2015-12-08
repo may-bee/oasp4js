@@ -11,26 +11,29 @@ var proxy = httpProxy.createProxyServer({
 /**
  * Additional logging for 500
  */
-proxy.on('error', function (error, req, res) {
-    res.writeHead(500, {
-        'Content-Type': 'text/plain'
-    });
-
-    console.error(chalk.red('[Proxy]'), error);
-});
+var onError = function (error, req, res) {
+  res.writeHead(500, {
+    'Content-Type': 'text/plain'
+  });
+  console.error(chalk.red('[Proxy]'), error);
+};
 /**
  * Update cookie to allow app be served on /.
  */
-proxy.on('proxyRes', function (proxyRes) {
-    if (proxyRes.headers['set-cookie']) {
-        proxyRes.headers['set-cookie'][0] = proxyRes.headers['set-cookie'][0].replace(config.proxy.context(), '');
-    }
-});
+var onProxyRes = function (proxyRes) {
+  if (proxyRes.headers['set-cookie']) {
+    proxyRes.headers['set-cookie'][0] = proxyRes.headers['set-cookie'][0].replace(config.proxy.context(), '');
+  }
+};
 /**
  * Support Websockets.
  */
-proxy.on('upgrade', function (req, socket, head) {
-    proxy.ws(req, socket, head);
+var onUpgrade = function (req, socket, head) {
+  proxy.ws(req, socket, head);
+};
+var proxy = httpProxy.createProxyServer({
+  target: config.proxy.url(),
+  ws: true
 });
 /**
  * Create middleware and define routing

@@ -19,7 +19,7 @@ module.exports = {
                 moduleAbsDir: joinFn(basePath, moduleDirectory)
             };
             if (fs.existsSync(paths.join(basePath, module.moduleFile))) {
-                module.ngModule = ngParseModule.parse(paths.join(basePath, module.moduleFile)).name;
+                module.ngModule = 'app';//ngParseModule.parse(paths.join(basePath, module.moduleFile)).name;
             }
             modules.push(module);
         }

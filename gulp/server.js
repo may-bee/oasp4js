@@ -16,21 +16,24 @@ function browserSyncInit(baseDir, files, browser) {
             baseDir: baseDir,
             middleware: middleware,
             routes: {
-                '/bower_components': 'bower_components'
+                '/bower_components': 'bower_components',
+                '/system.config.js': 'system.config.js'
             }
         },
         browser: browser,
-        ghostMode: false
+        ghostMode: false,
+        online: false
     });
 }
 
 gulp.task('serve', gulpsync.sync(['build', 'watch']), function () {
     browserSyncInit([
+        '.',
         config.paths.tmp,
         config.paths.src,
         'bower_components/bootstrap/dist'
     ], _.flatten([
-            config.paths.tmp + '/**'
+        config.paths.tmp + '/**'
     ]));
 });
 

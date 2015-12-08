@@ -12,8 +12,5 @@ gulp.task('watch', [], function () {
             gulp.start('indexHtml:html');
         }
     });
-    gulp.watch('bower.json', ['indexHtml:html']);
-    config.ngTemplates.conf().forEach(function (ngTemplatesItemConf) {
-        gulp.watch(ngTemplatesItemConf.src, ['ngTemplates[' + ngTemplatesItemConf.file + ']']);
-    });
+    gulp.watch(config.ngTemplates.src(),['ngTemplates']);
 });
