@@ -9,14 +9,14 @@
                data-tr-ng-grid=""
                data-selection-mode="SingleRow"
                data-enable-filtering="true"
-               data-selected-items="positionsAvailableSelected"
-               data-items="positions.availablePositions">
+               data-selected-items="CookPositionsCtrl.getPositionsAvailableSelected()"
+               data-items="CookPositionsCtrl.getPositions().availablePositions">
         </table>
     </div>
     <div class="col-md-2 assignment">
         <div class="btn-group-vertical" role="group">
-            <button data-ng-click="assignCookToPosition()"
-                    data-ng-disabled="!availablePositionSelected()"
+            <button data-ng-click="CookPositionsCtrl.assignCookToPosition()"
+                    data-ng-disabled="!CookPositionsCtrl.availablePositionSelected()"
                     type="button" class="btn btn-default" aria-label="Left Align">
                 <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
             </button>
@@ -30,14 +30,14 @@
                data-selection-mode="SingleRow"
                data-selected-items="positionsAssignedSelected"
                data-enable-filtering="false"
-               data-items="positions.positionsAssignedToCurrentUser">
+               data-items="CookPositionsCtrl.getPositions().positionsAssignedToCurrentUser">
         </table>
 
     </div>
 </div>
 <div class="row">
     <div class="col-md-5 col-md-offset-7">
-        <button-bar is-label-translatable="true" button-defs="buttonDefs"></button-bar>
+        <button-bar is-label-translatable="true" button-defs="CookPositionsCtrl.getButtonDefs()"></button-bar>
     </div>
 </div>
 </body>

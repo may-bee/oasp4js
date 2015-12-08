@@ -1,22 +1,16 @@
-/**
- * @ngdoc object
- * @name app
- * @module app
- * @requires ui.select
- * @requires app.main
- * @requires app.table-mgmt
- * @requires app.sales-mgmt
- * @requires app.offer-mgmt
- * @requires app.form-samples-mgmt
- */
+/// <reference path="../typings/tsd.d.ts" />
+
+import 'jquery';
+import * as angular from 'angular';
+
 angular.module('app',
     ['ui.select', 'app.main', 'app.table-mgmt', 'app.offer-mgmt', 'app.sales-mgmt', 'app.form-samples-mgmt'])
-    .config(function ($locationProvider, uiSelectConfig) {
+    .config(function ($locationProvider: ng.ILocationProvider, uiSelectConfig: any) {
         'use strict';
         $locationProvider.html5Mode(false);
         uiSelectConfig.theme = 'bootstrap';
     })
-    .run(function (globalSpinner) {
+    .run(function (globalSpinner: any) {
         'use strict';
         globalSpinner.showOnRouteChangeStartAndHideWhenComplete();
     });

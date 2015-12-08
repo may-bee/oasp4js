@@ -1,17 +1,17 @@
 /*globals oasp*/
-describe('Module: salesMgmt, Service: salesManagementRestService', function () {
+describe('Module: salesmanagemnet, Service: salesmanagementRestService', function () {
     'use strict';
-    var salesManagementRestService, contextPath = '/contextPath/';
+    var salesmanagementRestService, contextPath = '/contextPath/';
 
     beforeEach(module('app.sales-mgmt', function ($provide) {
         $provide.value('currentContextPath', oasp.mock.currentContextPathReturning(contextPath));
     }));
 
     beforeEach(inject(function (_salesManagementRestService_) {
-        salesManagementRestService = _salesManagementRestService_;
+        salesmanagementRestService = _salesManagementRestService_;
     }));
 
-    it('should call $http.post when salesManagementRestService.findOrders is called', inject(function ($http) {
+    it('should call $http.post when salesmanagementRestService.findOrders is called', inject(function ($http) {
         //given
         var params = {
                 			state: 'OPEN',
@@ -19,40 +19,40 @@ describe('Module: salesMgmt, Service: salesManagementRestService', function () {
             					};
         spyOn($http, 'post');
         //when
-        salesManagementRestService.findOrders(params);
+        salesmanagementRestService.findOrders(params);
         //then
         expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/salesmanagement/v1/order/search', params);
     }));
 
-    it('should call $http.post when salesManagementRestService.saveOrder is called', inject(function ($http) {
+    it('should call $http.post when salesmanagementRestService.saveOrder is called', inject(function ($http) {
         //given
         var order = {description: 'desc'};
 
         spyOn($http, 'post');
         //when
-        salesManagementRestService.saveOrder(order);
+        salesmanagementRestService.saveOrder(order);
         //then
         expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/salesmanagement/v1/order', order);
     }));
 
-    it('should call $http.post when salesManagementRestService.updateOrderPosition is called', inject(function ($http) {
+    it('should call $http.post when salesmanagementRestService.updateOrderPosition is called', inject(function ($http) {
         //given
         var orderPosition = 1;
 
         spyOn($http, 'post');
         //when
-        salesManagementRestService.updateOrderPosition(orderPosition);
+        salesmanagementRestService.updateOrderPosition(orderPosition);
         //then
         expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/salesmanagement/v1/orderposition', orderPosition);
     }));
 
-    it('should call $http.get when salesManagementRestService.findOrderPositions is called', inject(function ($http) {
+    it('should call $http.get when salesmanagementRestService.findOrderPositions is called', inject(function ($http) {
         //given
         var params = {orderId: 'id'};
 
         spyOn($http, 'get');
         //when
-        salesManagementRestService.findOrderPositions(params);
+        salesmanagementRestService.findOrderPositions(params);
         //then
         expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/salesmanagement/v1/orderposition', {params: params});
     }));
