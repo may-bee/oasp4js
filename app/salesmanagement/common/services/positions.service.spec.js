@@ -1,4 +1,4 @@
-describe('Module: \'app.sales-mgmt\', Service: \'positions\'', function () {
+describe('Module: \'app.salesmanagement\', Service: \'positions\'', function () {
     'use strict';
     var $q, positions, $scope, successCallback, failureCallback,
         userId = 1234,
@@ -38,7 +38,7 @@ describe('Module: \'app.sales-mgmt\', Service: \'positions\'', function () {
             }
         };
 
-    beforeEach(module('app.sales-mgmt', function ($provide) {
+    beforeEach(module('app.salesmanagement', function ($provide) {
         $provide.value('appContext', appContextMock);
         $provide.value('salesManagementRestService', salesManagementRestServiceMock);
         $provide.value('offers', offersServiceMock);

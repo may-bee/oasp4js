@@ -9,7 +9,7 @@ gulp.task('scripts', ['ngTemplates'], function (done) {
     //output.sourceMap; // generated bundle source map
     //output.modules;   // array of module names defined in the bundle
     builder.buildStatic('app/app.module.ts').then(function (output) {
-      $.file('app/app.module.js', output.source)
+      $.file('app/app.module.ts', output.source)
         .pipe($.ngAnnotate())
         .pipe($.uglify())
         .pipe(gulp.dest(config.paths.tmp))

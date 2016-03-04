@@ -3,11 +3,11 @@
  * @name app.table-mgmt
  * @module app
  * @requires app.offer-mgmt
- * @requires app.sales-mgmt
+ * @requires app.salesmanagement
  * @requires app.main
  * @requires table-mgmt.templates
  */
-angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main', 'app.table-mgmt.templates'], function (ROLES, $stateProvider, oaspTranslationProvider, oaspAuthorizationServiceProvider) {
+angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.salesmanagement', 'app.main', 'app.table-mgmt.templates'], function (ROLES, $stateProvider, oaspTranslationProvider, oaspAuthorizationServiceProvider) {
     'use strict';
     oaspTranslationProvider.enableTranslationForModule('table-mgmt');
 

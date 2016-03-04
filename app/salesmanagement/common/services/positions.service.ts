@@ -1,4 +1,4 @@
-import {SalesmanagementRestService} from "../salesmanagement.rest.service.ts";
+import {SalesmanagementRestService} from '../salesmanagement.rest.service.ts';
 import IPromise = angular.IPromise;
 import IQService = angular.IQService;
 
@@ -19,14 +19,14 @@ export class PositionsService {
                     this.salesmanagementRestService.findOrderPositions({state: 'ORDERED', mealOrSideDish: true}),
                     this.offers.loadAllOffers(),
                     this.offers.loadAllProducts()
-                ]).then(function (allResults) {
+                ]).then(function (allResults:any) {
                     this.positionsCache = new PositionsCache()
                         .currentUserId(cookId)
                         .allPositions(allResults[0].data)
                         .offers(allResults[1])
                         .products(allResults[2]);
                     deferredPositions.resolve(this.positionsCache.getAvailableAndAssignedPositions());
-                }, function (reject) {
+                }, function (reject:any) {
                     deferredPositions.reject(reject);
                 });
             } else {
@@ -66,13 +66,13 @@ export class PositionsService {
 
 class PositionsCache {
 
-    private allPositions:any = [];
+    private allPositions:Array = [];
     private cookId:number;
     private allOffers:any = [];
     private allProducts:any = [];
     private availableAndAssignedPositions:any = {};
 
-    private findItemById(items, id) {
+    private findItemById(items:Array, id:number) {
         var j, currentItem;
         if (items && id) {
             for (j = 0; j < items.length; j += 1) {
@@ -84,7 +84,7 @@ class PositionsCache {
         }
     }
 
-    private createDetailedPosition(position) {
+    private createDetailedPosition(position:any) {
         var currentOffer, currentMeal, currentSideDish;
 
         if (position) {
@@ -104,23 +104,23 @@ class PositionsCache {
         }
     }
 
-    allPositions(allPositionsToSet) {
+    allPositions(allPositionsToSet:Array) {
         this.allPositions = allPositionsToSet;
     }
 
-    currentUserId(cookIdToSet) {
+    currentUserId(cookIdToSet:number) {
         this.cookId = cookIdToSet;
     }
 
-    offers(offersToSet) {
+    offers(offersToSet:Array) {
         this.allOffers = offersToSet;
     }
 
-    products(productsToSet) {
+    products(productsToSet:Array) {
         this.allProducts = productsToSet;
     }
 
-    assignCookToPosition(cookIdToSet, positionId) {
+    assignCookToPosition(cookIdToSet:number, positionId:number) {
         var position = this.findItemById(this.allPositions, positionId);
         if (position) {
             position.cookId = cookIdToSet;
@@ -128,7 +128,7 @@ class PositionsCache {
         return position;
     }
 
-    setStatusOfPosition(status, positionId) {
+    setStatusOfPosition(status:any, positionId:number) {
         var position = this.findItemById(this.allPositions, positionId);
         if (position) {
             position.state = status;
@@ -136,7 +136,7 @@ class PositionsCache {
         return position;
     }
 
-    makePositionUnassigned(positionId) {
+    makePositionUnassigned(positionId:number) {
         var position = this.findItemById(this.allPositions, positionId);
         if (position) {
             position.cookId = undefined;

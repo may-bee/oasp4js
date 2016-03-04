@@ -4,10 +4,6 @@
 var httpProxy = require('http-proxy');
 var chalk = require('chalk');
 
-var proxy = httpProxy.createProxyServer({
-    target: config.proxy.url(),
-    ws: true
-});
 /**
  * Additional logging for 500
  */

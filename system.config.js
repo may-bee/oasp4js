@@ -52,21 +52,20 @@ System.config({
     "angular-ui-bootstrap": "bower:angular-ui-bootstrap-bower/index.js",
     "angular-ui-grid": "bower:angular-ui-grid/ui-grid.js",
     "angular-ui-select": "bower:angular-ui-select/dist/select.js",
-    "angular-ui-validate": "bower:adamas/js/systemjs/angular-ui-validate.js",
+    "angular-ui-validate": "app/oasp/oasp-systemjs/angular-ui-validate.js",
 
     "angular-translate": "bower:angular-translate/angular-translate.js",
     "angular-translate-loader-static-files": "bower:angular-translate-loader-static-files/angular-translate-loader-static-files.js",
 
-    "angular-breadcrumb": "bower:adamas/js/systemjs/angular-breadcrumb.js",
-    "angular-growl": "bower:adamas/js/systemjs/angular-growl.js",
-    "adamas": "bower:adamas/js/systemjs/adamas.js",
+    "angular-breadcrumb": "bower:oasp/oasp-systemjs/angular-breadcrumb.js",
+    "angular-growl": "app/oasp/oasp-systemjs/angular-growl.js",
     "jsuri": "bower:jsUri/Uri.js",
-    "angular-jsuri": "bower:adamas/js/systemjs/angular-jsuri.js",
+    "angular-jsuri": "app/oasp/oasp-systemjs/angular-jsuri.js",
     "spin.js": "bower:spin.js/spin.js",
     "angular-spinner": "bower:angular-spinner/angular-spinner.js",
 
 
-    "valdr": "bower:adamas/js/systemjs/valdr.js",
+    "valdr": "app/oasp/oasp-systemjs/valdr.js",
     "valdr-message": "bower:valdr/valdr-message.js",
     "pdfmake": "bower:pdfmake/build/pdfmake.js",
     "pdfmake-fonts": "bower:pdfmake/build/vfs_fonts.js",

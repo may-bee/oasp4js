@@ -1,5 +1,5 @@
 import * as SockJS from 'sockjs-client';
-import * as Stomp from 'stomp-websocket'; // https://github.com/jmesnil/stomp-websocket/issues/61
+import {Stomp} from '../../../oasp/typings/stomp-websocket'; // https://github.com/jmesnil/stomp-websocket/issues/61
 
 export class PositionStateNotificationService {
 
@@ -38,8 +38,8 @@ export class PositionStateNotificationService {
         return connectionPromise;
     }
 
-    subscribe(callbackFn) {
-        var internalCallback = function(message) {
+    subscribe(callbackFn: (jsonObject: any) => void) {
+        var internalCallback = function(message:any) {
             var parsedMessage = JSON.parse(message.body);
 
             if (angular.isFunction(callbackFn)) {
@@ -52,7 +52,7 @@ export class PositionStateNotificationService {
         }
     }
 
-    notify(positionId, newStatus) {
+    notify(positionId:number, newStatus:any) {
         var positionStatusChange = {
             id: positionId,
             status: newStatus

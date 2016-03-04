@@ -1,4 +1,4 @@
-import {SalesmanagementRestService} from "./../salesmanagement.rest.service.ts";
+import {SalesmanagementRestService} from './../salesmanagement.rest.service.ts';
 
 export class SalesmanagementService {
 
@@ -6,21 +6,21 @@ export class SalesmanagementService {
 
     }
 
-    loadOrderForTable(tableId) {
+    loadOrderForTable(tableId:number) {
         var orderSearchCriteria = {
             state: 'OPEN',
             tableId: tableId
         };
-        return this.salesmanagementRestService.findOrders(orderSearchCriteria).then(function (response) {
+        return this.salesmanagementRestService.findOrders(orderSearchCriteria).then(function (response:any) {
             return response.data.result && response.data.result.length ? response.data.result[0] : undefined;
         });
     }
 
 
-    saveOrUpdateOrder(order) {
+    saveOrUpdateOrder(order:any) {
         var promise;
-        //with the new REST API, there is no destinction between updating and creating an order
-        promise = this.salesmanagementRestService.saveOrder(order).then(function (response) {
+        // with the new REST API, there is no destinction between updating and creating an order
+        promise = this.salesmanagementRestService.saveOrder(order).then(function (response:any) {
             return response.data;
         });
         return promise;

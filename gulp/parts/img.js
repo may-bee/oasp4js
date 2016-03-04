@@ -2,7 +2,6 @@
 'use strict';
 var gulp = require('gulp');
 
-
 gulp.task('img', ['img:sprite', 'img:copy']);
 
 gulp.task('img:sprite', function () {

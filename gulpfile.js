@@ -11,6 +11,12 @@ global.isBuildForProd = function () {
 
 global.config = require('./gulp/lib/config-factory.js')(require('./config.json'));
 
+global.$ = require('gulp-load-plugins')({
+    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'uglify-save-license', 'del', 'wiredep']
+});
+
+global.gulpsync = require('gulp-sync')(gulp);
+
 require('require-dir')('./gulp', {recurse: true});
 
 gulp.task('default', ['clean'], function () {
@@ -23,7 +29,7 @@ gulp.task('ngdocs', [], function () {
         html5Mode: true,
         title: "OASP4JS"
     };
-    return gulp.src('app/**/*.js')
+    return gulp.src('app/**/*.ts')
         .pipe(gulpDocs.process())
         .pipe(gulp.dest('./docs'));
 });

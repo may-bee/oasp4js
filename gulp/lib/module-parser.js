@@ -11,7 +11,7 @@ module.exports = {
         for (var i = 0; i < moduleDirectories.length; i++) {
             moduleDirectory = moduleName = moduleDirectories[i];
             moduleName = paths.basename(moduleDirectory);
-            moduleFile = joinFn(moduleDirectory, moduleName + '.module.js');
+            moduleFile = joinFn(moduleDirectory, moduleName + '.module.ts');
             module = {
                 name: moduleName,
                 moduleFile: moduleFile,
