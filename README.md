@@ -6,13 +6,23 @@ The sample application is built on top of the [application template](https://git
 Getting Started
 ---
 
-To get started you need to clone the oasp4j repository containing the server part, build and deploy it on a Tomcat server. To get started with the client part you need to clone the oasp4js repository, build the client and start it.
+To get started you need to clone both the `oasp4j` and `oasp4js` repositories containing the server and the client part respectively. Each of them is to be built and started to talk to each other it. There are two ways to get the sample application working: eithter by getting the [oasp IDE](https://github.com/oasp/oasp4j/wiki/oasp-ide-setup) and running it from there or setting up the IDE manually. 
 
-Install prerequisites
----
+#Full oasp IDE installation
 
-You need a Git client to clone the repositories and the Node.js platform (including its package manager - npm) which allows Gulp and Bower to install the dependencies and build the application. [Here](https://github.com/oasp/oasp4js/wiki/Prerequisites) you can learn how to install the prerequisites. 
-Also, for the server part you need Maven (required version: 3.x) and Tomcat (min. version: 7.x, recommended version: 8.x) to be installed. For installation details please refer to the [Tomcat's](http://tomcat.apache.org/download-80.cgi) and [Maven's](http://maven.apache.org/download.cgi) home pages. 
+If you want to install full OASP IDE and get both server and client code please follow steps described in [oasp IDE setup](https://github.com/oasp/oasp4j/wiki/oasp-ide-setup). The `oasp IDE` already contains software (Node.js, Gulp, Bower, Maven) required to run the sample application; only Git has to be additionally installed. 
+
+#Getting oasp4js client working
+##Install prerequisites
+
+If the [oasp IDE setup](https://github.com/oasp/oasp4j/wiki/oasp-ide-setup) is not used, additional software has to be installed manually. You need a Git client to clone the repositories and the Node.js platform (including its package manager - npm) which allows Gulp and Bower to install the dependencies and build the application. [Here](https://github.com/oasp/oasp4js/wiki/Prerequisites) you can learn how to install the prerequisites. 
+Also, for the server part you need Maven (tested against the version: 3.3.9) to be installed. For installation details please refer to the [Maven's](http://maven.apache.org/download.cgi) home page. 
+
+Please note that this client version was tested with following versions of the additional software:
+- node.js version 5.0.0
+- npm version 3.3.6
+- gulp version 3.9.1
+- bower version 1.7.7
 
 Create the `<oasp_dir>` directory for the sample application
 ---
@@ -28,7 +38,7 @@ Set up the server part of the application
 Clone the oasp4j repository:
 
 ```  
-git clone https://github.com/oasp/oasp4j.git
+git clone --recursive https://github.com/oasp/oasp4j.git -b master
 ```
 
 Let Maven build the server part:
@@ -38,74 +48,34 @@ cd oasp4j
 mvn clean install 
 ```
 
-After a successful build, the `oasp4j-sample-server.war` file should appear in the following directory: 
+After a successful build go to the following directory
 
 ``` 
-<oasp_dir>\oasp4j\oasp4j-samples\oasp4j-sample-server\target
-
+cd samples\core\target
 ```
 
-Assuming you have installed the Tomcat in the `<tomcat_dir>` directory, copy the 'oasp4j-sample-server.war' file to 
+Configure the port number which should be used by the embedded tomcat server and its context path. To do this, create a new `application.properties` file in the `<oasp_dir>\oasp4j\samples\core\target` directory and add the following entries:
 
 ```
-<tomcat_dir>\webapps
+server.port=8081
+server.context-path=/oasp4j-sample-server
 ```
 
-Edit the `<tomcat_dir>\conf\tomcat-users.xml` file. Add the following roles and users to it: 
+Start the oasp4j-samples-core project as a Spring Boot application by running the following command in your console:
 
-```xml
-<tomcat-users>
-  <user username="chief" password="chief" />
-  <user username="waiter" password="waiter" />
-  <user username="barkeeper" password="barkeeper" />
-  <user username="cook" password="cook" />
-</tomcat-users>
-```
-
-<a name="changeTomcatsPortInServerXml"></a>
-Edit the `<tomcat_dir>\conf\server.xml` file. Change the Tomcat port to 8081 (if you don't want to change the Tomcat's port, then see the _[hint about how to configure a different port on the client side](#howToChangeTomcatsPortInConfigJson)_): 
-
-```xml
-<Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443"/>
-```
-
-Set up the server part's configuration. Under `<tomcat_dir>\lib` create the `config\env` directories:
- 
-```
-cd <tomcat_dir>\lib
-mkdir config\env
-```
-
-Create the `application.properties` file, put it under `<tomcat_dir>\lib\config\env` and add the following content to it: 
-
-```ini
-database.user.login = sa
-database.user.password =
-database.url = jdbc:h2:~/restaurant-db;INIT=create schema if not exists public
-database.migration.auto = true
-database.migration.clean = true
-```
-_Hint: The value of the `database.user.password` property should be left empty, exactly as shown above._
-
-Start the Tomcat: 
-
-```
-<tomcat_dir>\bin\startup.bat 
+``` 
+java -jar oasp4j-sample-core-dev-SNAPSHOT.jar
 ```
 
 Set up the client part of the application
 ---
 
-Go back to the `<oasp_dir>` directory: 
-
-```
-cd ..
-```
+We asume you are back in the `<oasp_dir>` directory.
 
 Clone the oasp4js repository:
 
 ``` 
-git clone https://github.com/oasp/oasp4js.git 
+git clone https://github.com/oasp/oasp4js.git -b master 
 ```
 
 Install the client part's dependencies: 
@@ -115,12 +85,12 @@ cd oasp4js
 npm install
 ```
 
-<a name="howToChangeTomcatsPortInConfigJson"></a> 
-_**Hint about how to configure a different Tomcat's port to be used on the client side:** If you did not want to change the Tomcat's port to 8081 as [described here](#changeTomcatsPortInServerXml), then you have to change the default port which is configured in the client part of the application, in the `<oasp_dir>\oasp4js\config.json` file. You have to set the correct port number in the following line of the aforementioned configuration file (replace '8888' with the port number which you configured for your Tomcat):_
+During the `npm install` process Bower downloads some libraries and uses Git for it. Git defaults to the Git protocol whose standard port (9418) is sometimes blocked by firewalls. A solution for this problem is to configure Git to use the `https` instead of the git protocol with following command:
 
+``` 
+git config --global url."https://".insteadOf git://
 ```
-"proxy": "http://localhost:8888",
-```
+and to rerun the `npm install` command.
 
 Start the application using Gulp:
 
@@ -131,3 +101,14 @@ gulp serve
 The above Gulp's task opens the client part of the application in your default browser and watches for any changes in HTML/JavaScript/CSS files. Once you change one, the page is reloaded automatically!
  
 You can sign in using the following credentials: waiter/waiter or cook/cook.
+
+If for some reason your client should talk to the server configured in a different way, you can configure the server details in the client's configuration file, `<oasp_dir>\oasp4js\config.json`, in the `proxy` part:
+
+``` 
+{
+    "proxy": {
+        "baseUrl": "http://localhost:8081",
+        "context": "/oasp4j-sample-server"
+    }
+}
+```
